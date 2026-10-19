@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Hosihikari.Bindings.Ir</RootNamespace>
+    <AssemblyName>Hosihikari.Bindings.Ir</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Hosihikari.Bindings.Ir</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Hosihikari</Authors>
+    <Description>Versioned intermediate representation and coverage contract for Hosihikari bindings.</Description>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/Hosihikari/Bindings.Ir</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>minecraft;bedrock;bds;binding;interop;hosihikari</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+</Project>
