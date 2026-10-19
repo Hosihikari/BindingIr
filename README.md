@@ -1,5 +1,7 @@
 # Hosihikari.Bindings.Ir
 
+[English](README.md) | [简体中文](README.zh_hans.md)
+
 The versioned intermediate representation (IR) and coverage contract shared by the Hosihikari binding generator and its .NET emitters.
 
 ## Boundary
@@ -8,7 +10,7 @@ This repository contains only the contract: the JSONL schema, the C# model, the 
 
 - IR **instances** are produced by the generator in the bindings CI and exchanged with `actions/upload-artifact` / `actions/download-artifact`. They are not committed here.
 - The **coverage manifest** is derived from the IR by the emitters and committed in the bindings repository.
-- The design rationale and the full schema are in [`Hosihikari/Design`](https://github.com/Hosihikari/Design): `docs/ir-and-coverage.md`, ADR-0013.
+- The design rationale and the full schema live in the internal `Hosihikari/Design` repository (private): `docs/ir-and-coverage.md`, ADR-0013.
 
 ## Projects
 
