@@ -166,9 +166,19 @@ public static class IrValidator
                         result.Add($"member '{member.Id}' has a negative vtable index.");
                     }
 
-                    if (member.Type is null || string.IsNullOrWhiteSpace(member.Type.Canonical))
+                    if (member.Kind is "field" or "static_field" or "enum_value" or "constant" or "global")
                     {
-                        result.Add($"member '{member.Id}' has no canonical type.");
+                        if (member.Type is null || string.IsNullOrWhiteSpace(member.Type.Canonical))
+                        {
+                            result.Add($"member '{member.Id}' has no canonical type.");
+                        }
+                    }
+                    else if (member.Kind is "method" or "function" or "constructor" or "destructor" or "operator")
+                    {
+                        if (member.Signature is null || string.IsNullOrWhiteSpace(member.Signature.Canonical))
+                        {
+                            result.Add($"member '{member.Id}' has no canonical signature.");
+                        }
                     }
 
                     break;

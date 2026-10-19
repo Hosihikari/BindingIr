@@ -11,6 +11,7 @@ public static class IrJson
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         WriteIndented = false,
+        AllowOutOfOrderMetadataProperties = true,
         Converters = { new JsonStringEnumConverter() },
     };
 

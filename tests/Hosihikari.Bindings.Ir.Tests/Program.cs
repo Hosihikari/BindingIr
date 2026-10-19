@@ -61,6 +61,18 @@ var validation = IrValidator.Validate(manifest, records);
 Check("valid IR", validation.IsValid);
 failures.AddRange(validation.Errors.Select(error => "IR: " + error));
 
+var method = new MemberRecord
+{
+    Id = declaration.Id + "@M@getId",
+    DeclarationId = declaration.Id,
+    Configuration = "win-x64-server",
+    Kind = "method",
+    Name = "getId",
+    Access = "public",
+    Signature = new SignatureInfo { Canonical = "mc::Player::getId", ReturnType = "int" },
+};
+Check("valid method IR", IrValidator.Validate(manifest, new List<IrRecord>(records) { method }).IsValid);
+
 using (var stream = new MemoryStream())
 {
     IrJson.WriteRecords(stream, records);
@@ -82,6 +94,13 @@ var unordered = "{\"b\":2,\"a\":1}";
 var ordered = "{\"a\":1,\"b\":2}";
 Check("canonical order", IrCanonicalJson.Canonicalize(unordered) == ordered);
 Check("canonical hash", IrHash.CanonicalJsonSha256(unordered) == IrHash.CanonicalJsonSha256(ordered));
+
+var lateDiscriminator = "{\"id\":\"late\",\"kind\":\"class\",\"qualifiedName\":\"late\",\"recordType\":\"declaration\",\"surface\":\"bedrock\"}";
+using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(lateDiscriminator + "\n")))
+{
+    var read = IrJson.ReadRecords(stream);
+    Check("out-of-order discriminator", read.Count == 1 && read[0] is DeclarationRecord);
+}
 
 var entryJson = IrJson.Serialize(new CoverageEntry
 {
