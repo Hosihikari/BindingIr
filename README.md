@@ -8,9 +8,8 @@ The versioned intermediate representation (IR) and coverage contract shared by t
 
 This repository contains only the contract: the JSONL schema, the C# model, the reader/writer, the canonical JSON hashing helpers, and the validator. It does not parse C++ headers, embed Clang, or generate bindings.
 
-- IR **instances** are produced by the generator in the bindings CI and exchanged with `actions/upload-artifact` / `actions/download-artifact`. They are not committed here.
-- The **coverage manifest** is derived from the IR by the emitters and committed in the bindings repository.
-- The design rationale and the full schema live in the internal `Hosihikari/Design` repository (private): `docs/ir-and-coverage.md`, ADR-0013.
+- IR instances are produced by the generator in the bindings CI and exchanged with `actions/upload-artifact` / `actions/download-artifact`. They are not committed here.
+- The coverage manifest is derived from the IR by the emitters and committed in the binding repository.
 
 ## Projects
 

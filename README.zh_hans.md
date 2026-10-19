@@ -8,9 +8,8 @@
 
 本仓只含契约：JSONL schema、C# 模型、读写器、规范 JSON 哈希与校验器。它不解析 C++ 头文件、不嵌入 Clang、不生成绑定。
 
-- IR **实例**由绑定仓 CI 中的生成器产出，经 `actions/upload-artifact` / `download-artifact` 交换，不提交到本仓。
-- **覆盖清单**由发射器从 IR 派生，提交在绑定仓。
-- 设计理由与完整 schema 在内部 `Hosihikari/Design` 仓（私有）：`docs/ir-and-coverage.md`、ADR-0013。
+- IR 实例由绑定仓 CI 中的生成器产出，经 `actions/upload-artifact` / `download-artifact` 交换，不提交到本仓。
+- 覆盖清单由发射器从 IR 派生，提交在绑定仓。
 
 ## 工程
 
