@@ -50,6 +50,8 @@ public sealed class MemberRecord : IrRecord
     public bool Static { get; set; }
     public bool Virtual { get; set; }
     public bool Pure { get; set; }
+    public bool Inline { get; set; }
+    public bool Defined { get; set; }
     public string? OverrideOf { get; set; }
     public int? VTableIndex { get; set; }
     public long? BitOffset { get; set; }
