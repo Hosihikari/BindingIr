@@ -57,6 +57,7 @@ public sealed class MemberRecord : IrRecord
     public TypeRef? Type { get; set; }
     public SignatureInfo? Signature { get; set; }
     public List<AttributeInfo> Attributes { get; set; } = [];
+    public List<MacroUseInfo> Macros { get; set; } = [];
     public CommentInfo? Comment { get; set; }
 }
 
