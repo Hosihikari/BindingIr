@@ -38,6 +38,8 @@ public sealed class TemplateArgument
 {
     public string Kind { get; set; } = "";
     public string Value { get; set; } = "";
+    public bool? Accessible { get; set; }
+    public bool? Complete { get; set; }
 }
 
 public sealed class TemplateInfo

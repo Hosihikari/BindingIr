@@ -30,6 +30,9 @@ public sealed class DeclarationRecord : IrRecord
     public TemplateInfo? Template { get; set; }
     public SignatureInfo? Signature { get; set; }
     public bool Deprecated { get; set; }
+    public bool Abstract { get; set; }
+    public bool CopyConstructible { get; set; }
+    public string? UnderlyingType { get; set; }
     public string? MangledName { get; set; }
 }
 
@@ -52,6 +55,10 @@ public sealed class MemberRecord : IrRecord
     public bool Pure { get; set; }
     public bool Inline { get; set; }
     public bool Defined { get; set; }
+    public bool Consteval { get; set; }
+    public bool VariableTemplate { get; set; }
+    public bool MemberTemplate { get; set; }
+    public string? RefQualifier { get; set; }
     public string? OverrideOf { get; set; }
     public int? VTableIndex { get; set; }
     public long? BitOffset { get; set; }
