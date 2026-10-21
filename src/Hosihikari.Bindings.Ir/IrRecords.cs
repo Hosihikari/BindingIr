@@ -54,6 +54,9 @@ public sealed class VariantRecord : IrRecord
     public string Availability { get; set; } = "present";
     public LayoutInfo? Layout { get; set; }
 
+    /// <summary>RTTI-derived base classes, independent of a full layout.</summary>
+    public List<BaseInfo> Bases { get; set; } = [];
+
     /// <summary>Linked vtable symbol for symbol-derived classes.</summary>
     public string? Symbol { get; set; }
 
