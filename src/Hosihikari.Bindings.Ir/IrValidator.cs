@@ -10,7 +10,7 @@ public sealed class IrValidationResult
 public static class IrValidator
 {
     private static readonly HashSet<string> Surfaces = new(StringComparer.Ordinal) { "bedrock", "levilamina", "endstone" };
-    private static readonly HashSet<string> Access = new(StringComparer.Ordinal) { "public", "protected", "private" };
+    private static readonly HashSet<string> Access = new(StringComparer.Ordinal) { "public", "protected", "private", "unknown" };
     private static readonly HashSet<string> Availability = new(StringComparer.Ordinal) { "present", "absent" };
     private static readonly HashSet<string> Emitters = new(StringComparer.Ordinal) { "interop", "shim" };
     private static readonly HashSet<string> Severities = new(StringComparer.Ordinal) { "error", "fatal", "warning", "note" };
@@ -78,6 +78,9 @@ public static class IrValidator
         }
 
         var declarations = new Dictionary<string, DeclarationRecord>(StringComparer.Ordinal);
+        var declarationIds = records.OfType<DeclarationRecord>()
+            .Select(declaration => declaration.Id)
+            .ToHashSet(StringComparer.Ordinal);
         var members = new HashSet<string>(StringComparer.Ordinal);
         var keys = new HashSet<(string Id, string Configuration)>();
 
@@ -115,7 +118,7 @@ public static class IrValidator
                     break;
 
                 case VariantRecord variant:
-                    if (!declarations.ContainsKey(variant.DeclarationId))
+                    if (!declarationIds.Contains(variant.DeclarationId))
                     {
                         result.Add($"variant references unknown declaration '{variant.DeclarationId}'.");
                     }
@@ -139,7 +142,7 @@ public static class IrValidator
                         break;
                     }
 
-                    if (!declarations.ContainsKey(member.DeclarationId))
+                    if (!declarationIds.Contains(member.DeclarationId))
                     {
                         result.Add($"member '{member.Id}' references unknown declaration '{member.DeclarationId}'.");
                     }
@@ -256,9 +259,9 @@ public static class IrValidator
             result.Add($"coverage.manifestVersion must be '{IrSchema.CoverageManifestVersion}'.");
         }
 
-        if (summary.IrVersion != IrSchema.Version)
+        if (!IrSchema.IsCompatibleVersion(summary.IrVersion))
         {
-            result.Add($"coverage.irVersion must be '{IrSchema.Version}', got '{summary.IrVersion}'.");
+            result.Add($"coverage.irVersion '{summary.IrVersion}' is not compatible with '{IrSchema.Version}'.");
         }
 
         if (summary.Unaccounted.Count > 0)

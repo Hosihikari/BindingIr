@@ -102,6 +102,62 @@ using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(lateDisc
     Check("out-of-order discriminator", read.Count == 1 && read[0] is DeclarationRecord);
 }
 
+var symbolDeclaration = new DeclarationRecord
+{
+    Id = "bedrock:Actor",
+    Surface = "bedrock",
+    Kind = "class",
+    QualifiedName = "Actor",
+    Access = "unknown",
+    Symbol = "??_7Actor@@6B@",
+    Address = 0x1402DA38F0,
+    Rva = 0x2DA38F0,
+};
+
+var symbolVariant = new VariantRecord
+{
+    DeclarationId = symbolDeclaration.Id,
+    Configuration = "win-x64-server",
+    Symbol = "??_7Actor@@6B@",
+    Address = 0x1402DA38F0,
+    Rva = 0x2DA38F0,
+};
+
+var symbolMember = new MemberRecord
+{
+    Id = "bedrock:Actor@Actor::canAttack#bool(Actor*,bool,)",
+    DeclarationId = symbolDeclaration.Id,
+    Configuration = "win-x64-server",
+    Kind = "method",
+    Name = "canAttack",
+    Access = "unknown",
+    Virtual = true,
+    VTableIndex = 12,
+    Symbol = "?_canAttack@Actor@@UEBA_NPEAV1@_N@Z",
+    Address = 0x1400BD3D0,
+    Rva = 0xBD3D0,
+    Signature = new SignatureInfo { Canonical = "Actor::canAttack", ReturnType = "bool" },
+};
+
+var symbolRecords = new List<IrRecord> { symbolDeclaration, symbolVariant, symbolMember };
+Check("symbol IR valid", IrValidator.Validate(manifest, symbolRecords).IsValid);
+
+using (var stream = new MemoryStream())
+{
+    IrJson.WriteRecords(stream, symbolRecords);
+    stream.Position = 0;
+    var read = IrJson.ReadRecords(stream);
+    Check(
+        "symbol fields round trip",
+        read.Count == 3
+        && read[0] is DeclarationRecord sd && sd.Symbol == "??_7Actor@@6B@" && sd.Address == 0x1402DA38F0 && sd.Rva == 0x2DA38F0
+        && read[1] is VariantRecord sv && sv.Symbol == "??_7Actor@@6B@" && sv.Address == 0x1402DA38F0
+        && read[2] is MemberRecord sm && sm.Symbol == "?_canAttack@Actor@@UEBA_NPEAV1@_N@Z" && sm.Address == 0x1400BD3D0 && sm.VTableIndex == 12);
+}
+
+Check("coverage version compatibility", IrSchema.IsCompatibleVersion("1.3.0"));
+Check("incompatible coverage version", !IrSchema.IsCompatibleVersion("2.0.0"));
+
 var entryJson = IrJson.Serialize(new CoverageEntry
 {
     Id = "x",

@@ -37,6 +37,15 @@ public sealed class DeclarationRecord : IrRecord
     public bool Consteval { get; set; }
     public string? UnderlyingType { get; set; }
     public string? MangledName { get; set; }
+
+    /// <summary>Linked symbol for symbol-derived declarations (for example a vtable).</summary>
+    public string? Symbol { get; set; }
+
+    /// <summary>Loaded virtual address for the symbol, when known.</summary>
+    public ulong? Address { get; set; }
+
+    /// <summary>Image-relative address for the symbol, when known.</summary>
+    public ulong? Rva { get; set; }
 }
 
 public sealed class VariantRecord : IrRecord
@@ -44,6 +53,15 @@ public sealed class VariantRecord : IrRecord
     public string DeclarationId { get; set; } = "";
     public string Availability { get; set; } = "present";
     public LayoutInfo? Layout { get; set; }
+
+    /// <summary>Linked vtable symbol for symbol-derived classes.</summary>
+    public string? Symbol { get; set; }
+
+    /// <summary>Loaded vtable address for the configuration, when known.</summary>
+    public ulong? Address { get; set; }
+
+    /// <summary>Image-relative vtable address, when known.</summary>
+    public ulong? Rva { get; set; }
 }
 
 public sealed class MemberRecord : IrRecord
@@ -71,6 +89,15 @@ public sealed class MemberRecord : IrRecord
     public List<AttributeInfo> Attributes { get; set; } = [];
     public List<MacroUseInfo> Macros { get; set; } = [];
     public CommentInfo? Comment { get; set; }
+
+    /// <summary>Linked symbol for symbol-derived members.</summary>
+    public string? Symbol { get; set; }
+
+    /// <summary>Loaded virtual address for the member symbol, when known.</summary>
+    public ulong? Address { get; set; }
+
+    /// <summary>Image-relative address for the member symbol, when known.</summary>
+    public ulong? Rva { get; set; }
 }
 
 public sealed class TypeRecord : IrRecord
