@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Hosihikari.Bindings.Ir;
 
 public sealed class SourceLocation
@@ -111,5 +113,6 @@ public sealed class LayoutInfo
     public long Align { get; set; }
     public List<FieldOffsetInfo> FieldOffsets { get; set; } = [];
     public List<BaseInfo> Bases { get; set; } = [];
+    [JsonPropertyName("vtableSlots")]
     public List<VTableSlotInfo> VTableSlots { get; set; } = [];
 }

@@ -84,6 +84,7 @@ public sealed class MemberRecord : IrRecord
     public bool MemberTemplate { get; set; }
     public string? RefQualifier { get; set; }
     public string? OverrideOf { get; set; }
+    [JsonPropertyName("vtableIndex")]
     public int? VTableIndex { get; set; }
     public long? BitOffset { get; set; }
     public long? BitWidth { get; set; }

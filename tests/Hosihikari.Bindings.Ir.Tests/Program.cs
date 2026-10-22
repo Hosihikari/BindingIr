@@ -1,3 +1,4 @@
+using System.Text;
 using Hosihikari.Bindings.Ir;
 
 var failures = new List<string>();
@@ -155,6 +156,22 @@ using (var stream = new MemoryStream())
         && read[1] is VariantRecord sv && sv.Symbol == "??_7Actor@@6B@" && sv.Address == 0x1402DA38F0
         && sv.Bases.Count == 1 && sv.Bases[0].DeclarationId == "bedrock:ActorStatusProvider"
         && read[2] is MemberRecord sm && sm.Symbol == "?_canAttack@Actor@@UEBA_NPEAV1@_N@Z" && sm.Address == 0x1400BD3D0 && sm.VTableIndex == 12);
+}
+
+using (var stream = new MemoryStream())
+{
+    IrJson.WriteRecords(stream, symbolRecords);
+    var text = Encoding.UTF8.GetString(stream.ToArray());
+    Check("vtable index uses the schema spelling", text.Contains("\"vtableIndex\":12", StringComparison.Ordinal));
+}
+
+const string memberLiteral = "{\"recordType\":\"member\",\"id\":\"x\",\"declarationId\":\"y\",\"configuration\":\"win-x64-server\",\"kind\":\"method\",\"name\":\"m\",\"signature\":{\"canonical\":\"m\"},\"vtableIndex\":7}";
+using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(memberLiteral)))
+{
+    var literalRecords = IrJson.ReadRecords(stream);
+    Check(
+        "vtable index reads the schema spelling",
+        literalRecords.Count == 1 && literalRecords[0] is MemberRecord lm && lm.VTableIndex == 7);
 }
 
 Check("coverage version compatibility", IrSchema.IsCompatibleVersion("1.3.0"));
