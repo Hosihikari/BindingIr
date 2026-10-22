@@ -57,6 +57,12 @@ public sealed class IrSupportSymbol
     public ulong? Address { get; set; }
 }
 
+public sealed class IrRecordSupport
+{
+    public IrSupportSymbol? Destructor { get; set; }
+    public IrSupportSymbol? CopyConstructor { get; set; }
+}
+
 public sealed class IrManifest
 {
     public string Schema { get; set; } = IrSchema.Uri;
@@ -68,4 +74,5 @@ public sealed class IrManifest
     public IrDiagnostics Diagnostics { get; set; } = new();
     public IrCounts Counts { get; set; } = new();
     public Dictionary<string, Dictionary<string, IrSupportSymbol>> SupportSymbols { get; set; } = new(StringComparer.Ordinal);
+    public Dictionary<string, Dictionary<string, IrRecordSupport>> RecordSupport { get; set; } = new(StringComparer.Ordinal);
 }
