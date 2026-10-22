@@ -50,6 +50,13 @@ public sealed class IrCounts
     public int Members { get; set; }
 }
 
+public sealed class IrSupportSymbol
+{
+    public string Symbol { get; set; } = "";
+    public ulong? Rva { get; set; }
+    public ulong? Address { get; set; }
+}
+
 public sealed class IrManifest
 {
     public string Schema { get; set; } = IrSchema.Uri;
@@ -60,4 +67,5 @@ public sealed class IrManifest
     public List<IrShard> Shards { get; set; } = [];
     public IrDiagnostics Diagnostics { get; set; } = new();
     public IrCounts Counts { get; set; } = new();
+    public Dictionary<string, Dictionary<string, IrSupportSymbol>> SupportSymbols { get; set; } = new(StringComparer.Ordinal);
 }
