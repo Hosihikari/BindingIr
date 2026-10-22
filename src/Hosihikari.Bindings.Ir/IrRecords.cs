@@ -32,6 +32,9 @@ public sealed class DeclarationRecord : IrRecord
     public bool Deprecated { get; set; }
     public bool Abstract { get; set; }
     public bool CopyConstructible { get; set; }
+
+    /// <summary>True when the record has trivial copy, move, and destructor operations.</summary>
+    public bool TriviallyCopyable { get; set; }
     public bool Inline { get; set; }
     public bool Defined { get; set; }
     public bool Consteval { get; set; }

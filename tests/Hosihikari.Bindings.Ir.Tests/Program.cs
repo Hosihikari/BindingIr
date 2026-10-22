@@ -115,6 +115,8 @@ var symbolDeclaration = new DeclarationRecord
     Rva = 0x2DA38F0,
 };
 
+symbolDeclaration.TriviallyCopyable = true;
+
 var symbolVariant = new VariantRecord
 {
     DeclarationId = symbolDeclaration.Id,
@@ -153,6 +155,7 @@ using (var stream = new MemoryStream())
         "symbol fields round trip",
         read.Count == 3
         && read[0] is DeclarationRecord sd && sd.Symbol == "??_7Actor@@6B@" && sd.Address == 0x1402DA38F0 && sd.Rva == 0x2DA38F0
+        && sd.TriviallyCopyable
         && read[1] is VariantRecord sv && sv.Symbol == "??_7Actor@@6B@" && sv.Address == 0x1402DA38F0
         && sv.Bases.Count == 1 && sv.Bases[0].DeclarationId == "bedrock:ActorStatusProvider"
         && read[2] is MemberRecord sm && sm.Symbol == "?_canAttack@Actor@@UEBA_NPEAV1@_N@Z" && sm.Address == 0x1400BD3D0 && sm.VTableIndex == 12);
