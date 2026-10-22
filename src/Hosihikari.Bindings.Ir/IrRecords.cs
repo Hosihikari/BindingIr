@@ -35,6 +35,12 @@ public sealed class DeclarationRecord : IrRecord
 
     /// <summary>True when the record has trivial copy, move, and destructor operations.</summary>
     public bool TriviallyCopyable { get; set; }
+
+    /// <summary>
+    /// True when destroying the record runs no user code. Element copies in sequences can then be
+    /// released without invoking a destructor, even when the copy constructor is user-provided.
+    /// </summary>
+    public bool TriviallyDestructible { get; set; }
     public bool Inline { get; set; }
     public bool Defined { get; set; }
     public bool Consteval { get; set; }
