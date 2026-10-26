@@ -2,7 +2,7 @@
 
 [English](README.md) | [简体中文](README.zh_hans.md)
 
-星光绑定生成器与 .NET 发射器共享的版本化中间表示（IR）与覆盖契约。
+星光投影生成器与 .NET 发射器共享的版本化中间表示（IR）与覆盖契约。
 
 ## 边界
 
@@ -16,7 +16,7 @@
 | 路径 | 用途 |
 |---|---|
 | `src/Hosihikari.Bindings.Ir` | 模型、JSONL 读写、规范 JSON + SHA-256、校验器 |
-| `tests/Hosihikari.Bindings.Ir.Tests` | 无依赖断言宿主；失败时以非零退出 |
+| `tests/Hosihikari.Bindings.Ir.Tests` | 无依赖断言载体；失败时以非零退出 |
 
 ## 构建与验证
 
@@ -24,7 +24,7 @@
 dotnet run --project tests/Hosihikari.Bindings.Ir.Tests/Hosihikari.Bindings.Ir.Tests.csproj -c Release
 ```
 
-断言宿主覆盖记录/清单往返、多态记录、规范哈希、枚举名，以及严格覆盖门禁（unknown、重复 `(id, configuration)`、缺失原因、计数不一致）。
+断言载体覆盖记录/清单往返、多态记录、规范哈希、枚举名，以及严格覆盖门禁（unknown、重复 `(id, configuration)`、缺失原因、计数不一致）。
 
 ## 版本
 
