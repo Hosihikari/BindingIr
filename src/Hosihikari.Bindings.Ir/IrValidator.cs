@@ -175,6 +175,11 @@ public static class IrValidator
                         {
                             result.Add($"member '{member.Id}' has no canonical type.");
                         }
+
+                        if (member.Kind == "enum_value" && !IsIntegerText(member.Value))
+                        {
+                            result.Add($"enum value '{member.Id}' has no integer value.");
+                        }
                     }
                     else if (member.Kind is "method" or "function" or "constructor" or "destructor" or "operator")
                     {
@@ -333,6 +338,14 @@ public static class IrValidator
 
         return result;
     }
+
+    /// <summary>A decimal enumerator value: signed or unsigned, up to 64 bits.</summary>
+    private static bool IsIntegerText(string? value) =>
+        !string.IsNullOrWhiteSpace(value)
+        && (long.TryParse(value, System.Globalization.NumberStyles.AllowLeadingSign,
+                System.Globalization.CultureInfo.InvariantCulture, out _)
+            || ulong.TryParse(value, System.Globalization.NumberStyles.None,
+                System.Globalization.CultureInfo.InvariantCulture, out _));
 
     private static void CheckCounts(
         IrValidationResult result,

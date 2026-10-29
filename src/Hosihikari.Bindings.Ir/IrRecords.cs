@@ -97,6 +97,13 @@ public sealed class MemberRecord : IrRecord
     public int? VTableIndex { get; set; }
     public long? BitOffset { get; set; }
     public long? BitWidth { get; set; }
+
+    /// <summary>
+    /// Enumerator value of an <c>enum_value</c> member, printed in decimal by the native
+    /// signedness. The string keeps unsigned 64-bit values lossless.
+    /// </summary>
+    public string? Value { get; set; }
+
     public TypeRef? Type { get; set; }
     public SignatureInfo? Signature { get; set; }
     public List<AttributeInfo> Attributes { get; set; } = [];
