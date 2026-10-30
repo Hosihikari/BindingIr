@@ -11,6 +11,12 @@ namespace Hosihikari.Bindings.Ir;
 [JsonDerivedType(typeof(DiagnosticRecord), "diagnostic")]
 public abstract class IrRecord
 {
+    /// <summary>
+    /// Decorated native name. Members that the carrier resolves by name at run time carry
+    /// it instead of an address; declaration records may use it for diagnostics.
+    /// </summary>
+    public string? MangledName { get; set; }
+
     public string? Configuration { get; set; }
 }
 
@@ -45,7 +51,6 @@ public sealed class DeclarationRecord : IrRecord
     public bool Defined { get; set; }
     public bool Consteval { get; set; }
     public string? UnderlyingType { get; set; }
-    public string? MangledName { get; set; }
 
     /// <summary>Linked symbol for symbol-derived declarations (for example a vtable).</summary>
     public string? Symbol { get; set; }
